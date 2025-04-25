@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Registration</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-container">
+            <a class="logo" href="#"><i class="fa fa-id-card"></i> RFID Attendance</a>
+            <ul class="nav-list">
+                <li class="nav-item"><a href="index.html"><i class="fa fa-home"></i> ← Back to Home</a></li>
+            </ul>
+            <div class="hamburger" onclick="document.querySelector('.nav-list').classList.toggle('active')">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <section class="home">
+        <div class="home-content">
+            <h1>Student Registration</h1>
+            <p>Please fill in your details to register your RFID tag.</p>
+        </div>
+        <form action="{{ url_for('register_student') }}" method="POST" style="margin-top: 30px;">
+            <input type="text" name="name" placeholder="Full Name" required><br><br>
+            <input type="text" name="roll" placeholder="University Roll Number" required><br><br>
+            <input type="text" name="uid" placeholder="RFID UID" required><br><br>
+            <button type="submit"><i class="fa fa-save"></i> Register</button>
+        </form>
+    </section>
+    </body>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Reset and base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #0F2027, #2C5364, #00FFAB);
+  min-height: 100vh;
+  color: white;
+}
+
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(135deg, #0F2027, #2C5364, #00FFAB);
+  padding: 10px 20px;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  color: #00FFAB;
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
+
+.nav-item {
+  margin: 0 15px;
+}
+
+.nav-item a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 30px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-item a:hover {
+  background-color: #00FFAB;
+  color: #0F2027;
+  transform: scale(1.05);
+}
+
+/* Hamburger */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.bar {
+  width: 28px;
+  height: 4px;
+  background-color: white;
+  margin: 4px 0;
+  border-radius: 2px;
+}
+
+/* Home Section (also used for Registration page) */
+.home {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding-top: 100px;
+  text-align: center;
+}
+
+.home-content h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  animation: fadeInDown 1s ease-out;
+}
+
+.home-content p {
+  font-size: 1.2rem;
+  color: #f1f1f1;
+  margin-bottom: 30px;
+}
+
+/* Registration Form */
+form {
+  margin-top: 20px;
+}
+
+form input[type="text"] {
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+  outline: none;
+  width: 300px;
+  background: white;
+  color: #0F2027;
+  margin-bottom: 15px;
+}
+
+form button {
+  padding: 12px 25px;
+  background-color: #00FFAB;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #0F2027;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+form button:hover {
+  background-color: #00e89d;
+  transform: scale(1.05);
+}
+
+form button i {
+  margin-right: 6px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .nav-list {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(135deg, #0F2027, #2C5364, #00FFAB);
+    border-radius: 0 0 12px 12px;
+    padding: 15px 0;
+    z-index: 1000;
+  }
+
+  .nav-list.active {
+    display: flex;
+  }
+
+  .nav-item {
+    margin: 10px 0;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .home {
+    padding-top: 140px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .home-content h1 {
+    font-size: 2.2rem;
+  }
+
+  form input[type="text"],
+  form button {
+    width: 90%;
+  }
+}
+
+/* Animations */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+ /* Add styles for flash messages */
+ .flash {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .flash.success {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .flash.error {
+            background-color: #f44336;
+            color: white;
+        }
+</style>
+</html>

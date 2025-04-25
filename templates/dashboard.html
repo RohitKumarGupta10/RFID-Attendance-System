@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - RFID Attendance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Add Font Awesome -->
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0F2027, #2C5364, #00FFAB);
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(135deg, #0F2027, #2C5364, #00FFAB);
+            padding: 10px 20px;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: #00FFAB;
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-list {
+            list-style: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-item {
+            margin: 0 15px;
+        }
+
+        .nav-item a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 30px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .nav-item a:hover {
+            background-color: #00FFAB;
+            color: #0F2027;
+            transform: scale(1.05);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .bar {
+            width: 30px;
+            height: 4px;
+            background-color: white;
+            margin: 5px 0;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            color: #2C5364;
+            margin-bottom: 25px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 16px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        th {
+            background: #00FFAB;
+            color: #0F2027;
+            padding: 14px;
+        }
+
+        td {
+            padding: 14px;
+            text-align: center;
+            background: #f9f9f9;
+            color: #333;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) td {
+            background: #f0f0f0;
+        }
+
+        tr:hover td {
+            background: #e0fdf4;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background-color: #00FFAB;
+            color: #0F2027;
+            font-weight: bold;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        /* Responsive Navbar */
+        @media (max-width: 768px) {
+            .nav-list {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background: linear-gradient(135deg, #0F2027, #2C5364, #00FFAB);
+                padding: 10px 0;
+            }
+
+            .nav-list.active {
+                display: flex;
+            }
+
+            .nav-item {
+                margin: 10px 0;
+                text-align: center;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+        }
+
+        .nav-item a i {
+            margin-right: 8px;
+            font-size: 1.2rem; /* Adjust icon size */
+        }
+
+        table td a i {
+            margin-right: 10px;
+            font-size: 1.2rem; /* Adjust icon size */
+            color: #00FFAB;
+            transition: color 0.3s ease;
+        }
+
+        table td a i:hover {
+            color: #0F2027; /* Change color on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-container">
+            <a class="logo" href="#">RFID Attendance</a>
+            <ul class="nav-list">
+                <li class="nav-item"><a href="index.html"><i class="fas fa-home"></i> Home</a></li> <!-- Home Icon -->
+            
+                <li class="nav-item"><a href="#"><i class="fas fa-phone-alt"></i> Contact</a></li> <!-- Contact Icon -->
+            </ul>
+            <div class="hamburger" onclick="document.querySelector('.nav-list').classList.toggle('active')">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Attendance Dashboard</h2>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>UID</th>
+                <th>Timestamp</th>
+                <th>Actions</th> <!-- Added an actions column -->
+            </tr>
+            {% for record in records %}
+            <tr>
+                <td>{{ record[0] }}</td>
+                <td>{{ record[1] }}</td>
+                <td>{{ record[2] }}</td>
+                <td>
+                    <a href="#" title="Edit"><i class="fas fa-edit"></i></a> <!-- Edit Icon -->
+                    <a href="#" title="Delete"><i class="fas fa-trash-alt"></i></a> <!-- Delete Icon -->
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <a href="/" class="back-link">← Back to Home</a>
+    </div>
+</body>
+</html>
