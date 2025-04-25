@@ -1,6 +1,4 @@
-# RFID-Attendance-System
-
-# SmartAttendance 🎓📶
+# RFID Smart Attendance System 
 
 A Flask-based RFID Attendance System that stores and displays student attendance records using an SQLite database.
 
@@ -69,19 +67,3 @@ SQLite
 
 HTML/CSS
 
-🙌 Author
-👤 Your Name
-
-📧 your.email@example.com
-
-🔗 LinkedIn
-
-This project is built for learning and demonstration purposes. Contributions and suggestions are welcome!
-
-yaml
-Copy
-Edit
-
----
-
-Let me know if you'd like me to tailor the README with your actual **name, LinkedIn, or email**, or want to add an **
