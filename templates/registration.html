@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>RFID Attendance System</title>
+    <title>Student Registration</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -11,9 +11,7 @@
         <div class="nav-container">
             <a class="logo" href="#"><i class="fa fa-id-card"></i> RFID Attendance</a>
             <ul class="nav-list">
-                <li class="nav-item"><a href="#"><i class="fa fa-home"></i> Home</a></li>
-                <li class="nav-item"><a href="dashboard.html"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                <li class="nav-item"><a href="registration.html"><i class="fa fa-user-plus"></i> Register</a></li>
+                <li class="nav-item"><a href="index.html"><i class="fa fa-home"></i> ← Back to Home</a></li>
             </ul>
             <div class="hamburger" onclick="document.querySelector('.nav-list').classList.toggle('active')">
                 <div class="bar"></div>
@@ -23,23 +21,32 @@
         </div>
     </div>
 
+
     <section class="home">
         <div class="home-content">
-            <h1>Welcome to RFID Attendance</h1>
+            <h1>Student Registration</h1>
+            <p>Please fill in your details to register your RFID tag.</p>
         </div>
-       <button onclick="window.location.href='attendance.html'" style="padding: 10px 20px; margin-left: 10px; background-color: #00FFAB; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; color: #0F2027; cursor: pointer;">
-        <i class="fa fa-check-circle"></i>Mark Attendance</button>
-
+        
+        <form action="/registration.html" method="POST">
+          <label for="name">Student Name:</label>
+          <input type="text" name="name" id="name" required>
+          
+          <label for="roll">Roll Number:</label>
+          <input type="text" name="roll" id="roll" required>
+          
+          <label for="uid">RFID UID:</label>
+          <input type="text" name="uid" id="uid" required>
+      
+          <button type="submit">Register Student</button>
+      </form>
       
     </section>
-</body>
-</html>
-
-
+    </body>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-/* General Reset & Typography */
+/* Reset and base */
 * {
   margin: 0;
   padding: 0;
@@ -53,72 +60,59 @@ body {
   color: white;
 }
 
- /* Navbar */
- .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: linear-gradient(135deg, #0F2027, #2C5364, #00FFAB);
-            padding: 10px 20px;
-            border-radius: 0 0 10px 10px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
-        }
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(135deg, #0F2027, #2C5364, #00FFAB);
+  padding: 10px 20px;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
 
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-        .logo {
-            color: #00FFAB;
-            font-size: 1.8rem;
-            font-weight: bold;
-            text-decoration: none;
-        }
+.logo {
+  color: #00FFAB;
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-decoration: none;
+}
 
-        .nav-list {
-            list-style: none;
-            display: flex;
-            align-items: center;
-        }
+.nav-list {
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
 
-        .nav-item {
-            margin: 0 15px;
-        }
+.nav-item {
+  margin: 0 15px;
+}
 
-        .nav-item a {
-            color: white;
-            text-decoration: none;
-            font-size: 18px;
-            font-weight: bold;
-            padding: 10px 20px;
-            border-radius: 30px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
+.nav-item a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 30px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
 
-        .nav-item a:hover {
-            background-color: #00FFAB;
-            color: #0F2027;
-            transform: scale(1.05);
-        }
+.nav-item a:hover {
+  background-color: #00FFAB;
+  color: #0F2027;
+  transform: scale(1.05);
+}
 
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-        }
-
-        .bar {
-            width: 30px;
-            height: 4px;
-            background-color: white;
-            margin: 5px 0;
-        }
-
-/* Hamburger Menu */
+/* Hamburger */
 .hamburger {
   display: none;
   flex-direction: column;
@@ -133,19 +127,19 @@ body {
   border-radius: 2px;
 }
 
-/* Home Section */
+/* Home Section (also used for Registration page) */
 .home {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  padding-top: 80px;
+  padding-top: 100px;
   text-align: center;
 }
 
 .home-content h1 {
-  font-size: 3.2rem;
+  font-size: 3rem;
   margin-bottom: 10px;
   animation: fadeInDown 1s ease-out;
 }
@@ -156,21 +150,25 @@ body {
   margin-bottom: 30px;
 }
 
-/* Form Elements */
+/* Registration Form */
+form {
+  margin-top: 20px;
+}
+
 form input[type="text"] {
   padding: 12px 20px;
   border-radius: 8px;
   border: none;
   font-size: 16px;
   outline: none;
-  width: 250px;
+  width: 300px;
   background: white;
   color: #0F2027;
+  margin-bottom: 15px;
 }
 
 form button {
   padding: 12px 25px;
-  margin-left: 10px;
   background-color: #00FFAB;
   border: none;
   border-radius: 8px;
@@ -182,12 +180,16 @@ form button {
   transition: all 0.3s ease;
 }
 
+form button:hover {
+  background-color: #00e89d;
+  transform: scale(1.05);
+}
 
 form button i {
   margin-right: 6px;
 }
 
-/* Responsive */
+/* Responsive Design */
 @media (max-width: 768px) {
   .nav-list {
     display: none;
@@ -215,7 +217,7 @@ form button i {
   }
 
   .home {
-    padding-top: 120px;
+    padding-top: 140px;
     padding-left: 20px;
     padding-right: 20px;
   }
@@ -224,18 +226,13 @@ form button i {
     font-size: 2.2rem;
   }
 
-  form input[type="text"] {
-    width: 90%;
-    margin-bottom: 15px;
-  }
-
+  form input[type="text"],
   form button {
     width: 90%;
-    margin: 0;
   }
 }
 
-/* Animation */
+/* Animations */
 @keyframes fadeInDown {
   from {
     opacity: 0;
@@ -246,7 +243,20 @@ form button i {
     transform: translateY(0);
   }
 }
-
-
+ /* Add styles for flash messages */
+ .flash {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .flash.success {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .flash.error {
+            background-color: #f44336;
+            color: white;
+        }
 </style>
 </html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mark Attendance</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="nav-container">
+            <a class="logo" href="#"><i class="fa fa-id-card"></i> RFID Attendance</a>
+            <ul class="nav-list">
+                <li class="nav-item"><a href="index.html"><i class="fa fa-home"></i> Home</a></li>
+                <li class="nav-item"><a href="dashboard.html"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+            </ul>
+            <div class="hamburger" onclick="document.querySelector('.nav-list').classList.toggle('active')">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Attendance Section -->
+    <section class="home">
+        <div class="home-content">
+            <h1>Tap Your RFID to Mark Attendance</h1>
+            <p>Hold your RFID card near the reader to log your attendance.</p>
+        </div>
+
+        <form action="/mark_attendance" method="POST" style="margin-top: 30px;">
+            <input type="text" name="uid" id="uid" placeholder="Scan your card..." autofocus>
+            <button type="submit">
+                <i class="fa fa-check-circle"></i> Mark Attendance
+            </button>
+        </form>
+
+        <!-- Success Message -->
+        <div id="attendanceSuccess" class="success-message" style="display: none;">
+            <p>Attendance marked successfully!</p>
+        </div>
+    </section>
+
+</body>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      const uidInput = document.getElementById('uid');
+      const form = document.querySelector('form');
+      const successMessage = document.getElementById('attendanceSuccess');
+  
+      uidInput.focus();
+  
+      // Listen to "Enter" key if the reader types and ends UID with Enter
+      uidInput.addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+              e.preventDefault();  // Prevent form submission via Enter
+              form.submit();       // Trigger the form submit event
+          }
+      });
+  
+      // Show success message after form submission
+      form.addEventListener("submit", function (event) {
+          event.preventDefault();  // Prevent default form submission for the demo
+          
+          // Display the success message
+          successMessage.style.display = 'block';
+          successMessage.style.animation = 'fadeInMessage 1s ease-out';  // Add fade-in animation
+  
+          // Hide success message after 3 seconds
+          setTimeout(function() {
+              successMessage.style.display = 'none';
+          }, 3000);
+      });
+  
+      // Refocus if user clicks somewhere else
+      window.addEventListener("click", function () {
+          uidInput.focus();
+      });
+  });
+</script>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    /* General Reset & Typography */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0F2027, #2C5364, #00FFAB);
+      min-height: 100vh;
+      color: white;
+    }
+
+    /* Navbar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: linear-gradient(135deg, #0F2027, #2C5364, #00FFAB);
+      padding: 10px 20px;
+      border-radius: 0 0 10px 10px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      color: #00FFAB;
+      font-size: 1.8rem;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-item {
+      margin: 0 15px;
+    }
+
+    .nav-item a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: bold;
+      padding: 10px 20px;
+      border-radius: 30px;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .nav-item a:hover {
+      background-color: #00FFAB;
+      color: #0F2027;
+      transform: scale(1.05);
+    }
+
+    /* RFID Attendance Section */
+    .home {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding-top: 80px;
+      text-align: center;
+    }
+
+    .home-content h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      animation: fadeInDown 1s ease-out;
+    }
+
+    .home-content p {
+      font-size: 1.2rem;
+      color: #f1f1f1;
+      margin-bottom: 30px;
+    }
+
+    /* RFID Input & Button */
+    form input[type="text"] {
+      padding: 12px 20px;
+      border-radius: 8px;
+      border: none;
+      font-size: 16px;
+      outline: none;
+      width: 250px;
+      text-align: center;
+      background: white;
+      color: #0F2027;
+    }
+
+    form button {
+      padding: 12px 25px;
+      margin-left: 10px;
+      background-color: #00FFAB;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #0F2027;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    form button:hover {
+      background-color: #00e89d;
+      transform: scale(1.05);
+    }
+
+    form button i {
+      margin-right: 6px;
+    }
+
+    /* Success Message */
+    .success-message {
+      background-color: #00FFAB;
+      color: #0F2027;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      width: 300px;
+      margin-top: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      transition: opacity 0.3s ease;
+    }
+
+    .success-message p {
+      margin: 0;
+      text-align: center;
+    }
+
+    /* Animation */
+    @keyframes fadeInMessage {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+</style>
+
+</html>
